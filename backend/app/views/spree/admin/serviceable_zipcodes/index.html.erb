@@ -1,0 +1,39 @@
+<% content_for :page_title do %>
+  <%= plural_resource_name(Spree::ServiceableZipcode) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= button_link_to Spree.t(:new_serviceable_zipcode), new_object_url, { :class => "btn-success", :icon => 'add', :id => 'admin_new_serviceable_zipcode' } %>
+<% end if can? :create, Spree::ServiceableZipcode %>
+
+<% if @serviceable_zipcodes.any? %>
+  <table class="table" id='listing_serviceable_zipcodes' data-hook>
+    <thead>
+      <tr data-hook="serviceable_zipcodes_header">
+        <th>Zipcode</th>
+        <th>Stock Location</th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @serviceable_zipcodes.each do |serviceable_zipcode|
+           @edit_url = edit_admin_serviceable_zipcode_path(serviceable_zipcode)
+           @delete_url = admin_serviceable_zipcode_path(serviceable_zipcode)
+      %>
+        <tr id="<%= spree_dom_id serviceable_zipcode %>" data-hook="serviceable_zipcode_row">
+          <td><%= serviceable_zipcode.zipcode %></td>
+          <td><%= serviceable_zipcode.stock_location.name %></td>
+          <td class="actions actions-2 text-center">
+            <%= link_to_edit(serviceable_zipcode, :no_text => true) if can? :create, serviceable_zipcode %>
+            <%= link_to_delete(serviceable_zipcode, :no_text => true) if can? :create, serviceable_zipcode %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree::ServiceableZipcode)) %>,
+    <%= link_to(Spree.t(:add_one), new_object_url) if can? :create, Spree::ServiceableZipcode %>!
+  </div>
+<% end %>

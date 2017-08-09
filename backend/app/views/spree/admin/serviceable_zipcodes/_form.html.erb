@@ -1,0 +1,12 @@
+<div data-hook="admin_serviceable_zipcodes_form_fields">
+
+  <div class="form-group" data-hook="serviceable_zipcode_zipcode">
+    <%= f.label :zipcode, Spree.t(:zipcode) %>
+    <%= f.text_field :zipcode, class: 'form-control' %>
+  </div>
+
+  <div class="form-group" data-hook="serviceable_zipcode_stock_location">
+    <%= f.label :stock_location_id, Spree.t(:stock_location) %>
+    <span id="stock_location"><%= f.collection_select :stock_location_id, Spree::StockLocation.all, :id, :name, {}, { class: 'select2' } %></span>
+  </div>
+</div>
